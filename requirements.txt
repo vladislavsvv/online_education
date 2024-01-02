@@ -4,3 +4,4 @@ pillow
 ipython
 djangorestframework-simplejwt
 djangorestframework
+drf-yasg
