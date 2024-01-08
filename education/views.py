@@ -12,6 +12,13 @@ class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     pagination_class = LessonPaginator
 
+    def create(self, request, *args, **kwargs):
+        self.serializer_class = CourseCreateSerializer
+        new_course = super().create(request, *args, **kwargs)
+        new_course.author = self.request.user
+        new_course.save()
+        return new_course
+
     def perform_create(self, serializer):
         # привязка создателя к курсу
         serializer.save()
