@@ -5,3 +5,8 @@ ipython
 djangorestframework-simplejwt
 djangorestframework
 drf-yasg
+django-cors-headers
+coverage
+stripe
+celery
+redis
