@@ -16,7 +16,7 @@ class CourseViewSet(viewsets.ModelViewSet):
         self.serializer_class = CourseCreateSerializer
         new_course = super().create(request, *args, **kwargs)
         new_course.author = self.request.user
-        new_course.save()
+        # new_course.save()
 
 
     def perform_create(self, serializer):
