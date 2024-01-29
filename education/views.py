@@ -11,6 +11,7 @@ class CourseViewSet(viewsets.ModelViewSet):
     serializer_class = CourseSerializer
     queryset = Course.objects.all()
     pagination_class = LessonPaginator
+    permission_classes = [IsManager | IsAutor]
 
     def create(self, request, *args, **kwargs):
         self.serializer_class = CourseCreateSerializer
