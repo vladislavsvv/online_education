@@ -17,7 +17,6 @@ class CourseViewSet(viewsets.ModelViewSet):
         self.serializer_class = CourseCreateSerializer
         new_course = super().create(request, *args, **kwargs)
         new_course.author = self.request.user
-        # new_course.save()
         return new_course
 
 
@@ -28,7 +27,7 @@ class CourseViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         if not self.request.user.is_staff:
-            return Course.objects.filter(autor=self.request.user)
+            return Course.objects.filter(author=self.request.user)
         elif self.request.user.is_staff:
             return Course.objects.all()
 

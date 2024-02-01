@@ -10,3 +10,6 @@ coverage
 stripe
 celery
 redis
+django-celery-beat
+docker
+python-dotenv
