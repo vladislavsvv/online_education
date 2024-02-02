@@ -5,6 +5,7 @@ from education.models import Course, Lesson, Subscription
 from education.paginations import LessonPaginator
 from education.permissions import IsAutor, IsManager
 from education.serializers import CourseSerializer, LessonSerializer, CourseCreateSerializer, SubscriptionSerializer
+from education.tasks import send_mail_user
 
 
 class CourseViewSet(viewsets.ModelViewSet):
@@ -25,11 +26,16 @@ class CourseViewSet(viewsets.ModelViewSet):
         serializer.save()
         self.request.user.course_set.add(serializer.instance)
 
+    def perform_update(self, serializer):
+        course_id = serializer.save(author=self.request.user).id
+        send_mail_user.delay(course_id)
+
     def get_queryset(self):
         if not self.request.user.is_staff:
             return Course.objects.filter(author=self.request.user)
         elif self.request.user.is_staff:
             return Course.objects.all()
+
 
 
 class LessonListAPIView(ListAPIView):
